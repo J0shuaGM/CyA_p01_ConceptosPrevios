@@ -44,37 +44,22 @@ void Usage(int argc, char* argv[]) {
   }
 }
 
-std::set<Alumno> LecturaFichero(std::ifstream& fichero_entrada) {
+void LeerDatos(std::istream& fichero_entrada, std::set<Alumno>& listado) {
   std::string alu;
   double nota;
-  std::set<Alumno> listado;
-  while(fichero_entrada >> alu >> nota) {
-    Alumno alumno(alu, nota);
-    if(alumno.ComprobarDatos(alu, nota)){
-      auto iterador = listado.find(alumno); 
-      if(iterador != listado.end()) {
-        if(iterador->getNota() < nota) {
-          listado.erase(iterador);
-          listado.insert(alumno);
-        }
-      } else {
-        listado.insert(alumno);
-      }
-    }
-  }
-  return listado;
-}
 
-void Insertar(std::set<Alumno>& listado, Alumno nuevo_alumno) {
-  if(nuevo_alumno.ComprobarDatos(nuevo_alumno.getAlu(), nuevo_alumno.getNota())) {
-    auto iterador = listado.find(nuevo_alumno); 
-    if(iterador != listado.end()) {
-      if(iterador->getNota() < nuevo_alumno.getNota()) {
-        listado.erase(iterador);
-        listado.insert(nuevo_alumno);
+  while (fichero_entrada >> alu >> nota) {
+    Alumno temp_alumno(alu, std::vector<double>{nota});
+    if(temp_alumno.ComprobarDatos(alu, nota)) {
+      auto busqueda = listado.find(temp_alumno);
+      if (busqueda != listado.end()) {
+        Alumno alumno_existente = *busqueda;
+        alumno_existente.setNuevaNota(nota);
+        listado.erase(busqueda);
+        listado.insert(alumno_existente);
+      } else {
+        listado.insert(temp_alumno);
       }
-    } else {
-      listado.insert(nuevo_alumno);
     }
   }
 }

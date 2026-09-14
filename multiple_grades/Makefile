@@ -10,7 +10,7 @@
 # Archivo Makefile
 
 # Nombre del archivo de salida
-TARGET = single
+TARGET = multiple
 
 # Lista de archivos fuente(.cc)
 SOURCES = cliente.cc alumno.cc tools.cc

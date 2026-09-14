@@ -16,9 +16,9 @@
 
 #include "alumno.h"
 
-Alumno::Alumno(const std::string& alu, double nota) {
+Alumno::Alumno(const std::string& alu, std::vector<double> notas) {
   alu_ = alu; 
-  notaMax_ = nota;
+  notas_ = notas;
 }
 
 bool Alumno::ComprobarDatos(const std::string& alu, double nota) {
@@ -41,15 +41,23 @@ bool Alumno::ComprobarDatos(const std::string& alu, double nota) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Alumno& alumno) {
-  os << alumno.alu_ << " " << alumno.notaMax_ << std::endl;
+  os << alumno.alu_ << " "; 
+  for(int i = 0; i < alumno.notas_.size(); i++) {
+    os << alumno.notas_[i] << " ";
+  }
+  os << std::endl;
   return os;
 }
 
 std::istream& operator>>(std::istream& is, Alumno& alumno) {
   std::string alu;
+  std::vector<double> notas;
   double nota;
-  is >> alu >> nota;
+  is >> alu;
   alumno.setAlu(alu);
-  alumno.setNota(nota);
+  while (is >> nota) {
+    notas.push_back(nota);
+  }
+  alumno.setNota(notas);
   return is;
 }

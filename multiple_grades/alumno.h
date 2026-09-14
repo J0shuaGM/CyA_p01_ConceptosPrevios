@@ -16,41 +16,40 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <vector>
 
 class Alumno {
   public:
     //Constructores
-    Alumno(const std::string& alu, double nota); //Constructor parametrizado por datos
+    Alumno(const std::string& alu, std::vector<double> notas); //Constructor parametrizado por datos
 
     //Destructor
     ~Alumno() {}
 
     //Getters
     std::string getAlu(void) { return alu_; }
-    int getNota(void) { return notaMax_; }
-        std::string getAlu(void) const { return alu_; }
-    int getNota(void) const { return notaMax_; }
+    std::vector<double> getNotas(void) { return notas_; }
+    std::string getAlu(void) const { return alu_; }
+    std::vector<double> getNotas(void) const { return notas_; }
 
     //Setters
     void setAlu(const std::string& alu) { alu_ = alu; }
-    void setNota(double nota) { notaMax_ = nota; }
+    void setNota(std::vector<double> nota) { notas_ = nota; }
+    void setNuevaNota(double nota) { notas_.push_back(nota); }
 
     //Metodos
     bool ComprobarDatos(const std::string& alu, double nota);
+    bool ComprobarDatos(Alumno alumno);
 
     //Sobrecarga de operadores 
     friend std::ostream& operator<<(std::ostream& os, const Alumno& alumno);
     friend std::istream& operator>>(std::istream& is, Alumno& alumno);
-    bool operator<(const Alumno& otro) const {
-      return alu_ < otro.alu_;
-    }
-    bool operator==(const Alumno& otro) const {
-      return alu_ == otro.alu_;
-    }
+    bool operator<(const Alumno& otro) const { return alu_ < otro.alu_; }
+    bool operator==(const Alumno& otro) const { return alu_ == otro.alu_; }
 
   private:
     std::string alu_;
-    double notaMax_;
+    std::vector<double> notas_;
 };
 
 #endif

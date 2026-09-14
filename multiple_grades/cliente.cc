@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <set>
 
 #include "tools.h"
 #include "alumno.h"
@@ -20,32 +21,25 @@ int main(int argc, char* argv[]) {
   Usage(argc, argv);
   std::string nombre_fichero = argv[1];
   std::ifstream fichero_entrada(nombre_fichero);
+  std::set<Alumno> listado;
   if (!fichero_entrada.is_open()) {
     std::cerr << "El fichero de entrada no se ha podido abrir" << std::endl;
     std::exit(EXIT_FAILURE);
+  } else {
+    LeerDatos(fichero_entrada, listado);
+    fichero_entrada.close();
   }
-  std::set<Alumno> listado = LecturaFichero(fichero_entrada);
   ImprimirListado(listado);
+  std::cout << std::endl;
   int opcion;
   std::cout << "¿Desea introducir mas alumnos? 1 = SI/2 = NO: " << std::endl;
   std::cin >> opcion; 
   if(opcion == 1) {
-    std::string alu; 
-    double nota;
-    std::cout << "Introduzca 'fin' para finalizar" << std::endl;
-    while (true) {
-      std::cout << "Introduzca alu y nota: ";
-      std::cin >> alu;
-      if (alu == "fin" || alu == "FIN") {
-        break;
-      }
-      std::cin >> nota;
-      std::cout << std::endl;
-      Alumno nuevo_alumno(alu, nota);
-      Insertar(listado, nuevo_alumno);
-      ImprimirListado(listado);
-      std::cout << std::endl;
-    }
+    std::cout << "Introduzca alu y nota o pulse CTRL + D para finalizar" << std::endl;
+    LeerDatos(std::cin, listado);
+    std::cin.clear();
+    std::cout << std::endl;
+    ImprimirListado(listado);
   } else if(opcion == 2) {
     return 0; 
   } else {

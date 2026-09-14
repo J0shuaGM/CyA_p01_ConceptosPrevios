@@ -22,8 +22,8 @@
 #include "alumno.h"
 
 void Usage(int argc, char *argv[]);
-std::set<Alumno> LecturaFichero(std::ifstream& fichero_entrada);
+void LeerDatos(std::istream& fichero_entrada, std::set<Alumno>& listado);
 void ImprimirListado(const std::set<Alumno>& listado);
-void Insertar(std::set<Alumno>& listado, Alumno nuevo_alumno);
+
 
 #endif

@@ -27,9 +27,9 @@ class Alumno {
 
     //Getters
     std::string getAlu(void) { return alu_; }
-    int getNota(void) { return notaMax_; }
-        std::string getAlu(void) const { return alu_; }
-    int getNota(void) const { return notaMax_; }
+    double getNota(void) { return notaMax_; }
+    std::string getAlu(void) const { return alu_; }
+    double getNota(void) const { return notaMax_; }
 
     //Setters
     void setAlu(const std::string& alu) { alu_ = alu; }
@@ -41,12 +41,8 @@ class Alumno {
     //Sobrecarga de operadores 
     friend std::ostream& operator<<(std::ostream& os, const Alumno& alumno);
     friend std::istream& operator>>(std::istream& is, Alumno& alumno);
-    bool operator<(const Alumno& otro) const {
-      return alu_ < otro.alu_;
-    }
-    bool operator==(const Alumno& otro) const {
-      return alu_ == otro.alu_;
-    }
+    bool operator<(const Alumno& otro) const { return alu_ < otro.alu_; }
+    bool operator==(const Alumno& otro) const { return alu_ == otro.alu_; }
 
   private:
     std::string alu_;
